@@ -1,15 +1,65 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo">
-    <h1 class="my-5 bg-dark text-light p-3 rounded d-flex align-items-center">
-      <span class="mx-2 text-white">Vue 3 Starter</span>
-    </h1>
+  <div class="container">
+    <div class="row">
+      <div class="col" v-if="state.user.isAuthenticated">
+        <form class="form-inline" @submit.prevent="createBoard">
+          <div class="form-group">
+            <input
+              type="text"
+              name="title"
+              id="title"
+              class="form-control"
+              placeholder="Title"
+              aria-describedby="helpId"
+              v-model="state.newBoard.title"
+            />
+          </div>
+          <button class="btn btn-info" type="submit">
+            Create New Board
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <Board v-for="boardData in state.boards"
+               :key="boardData.id"
+               :board="boardData"
+        >
+        </board>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { AppState } from '../AppState'
+import { reactive, computed } from 'vue'
+import { boardsService } from '../services/BoardsService'
+import { useRouter } from 'vue-router'
+import { onMounted } from '@vue/runtime-core'
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  setup() {
+    const state = reactive({
+      boards: computed(() => AppState.boards),
+      user: computed(() => AppState.user),
+      newBoard: {}
+    })
+    const router = useRouter()
+    onMounted(() => {
+      boardsService.getBoards()
+    })
+    return {
+      state,
+      async createBoard() {
+        const boardId = await boardsService.createBoard(state.newBoard)
+        router.push({ name: 'BoardsPage', params: { id: boardId } })
+        state.newBoard = {}
+      }
+    }
+  }
 }
 </script>
 

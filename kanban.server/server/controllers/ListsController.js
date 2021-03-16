@@ -2,6 +2,7 @@ import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 // import { boardsService } from '../services/BoardsService'
 import { listsService } from '../services/ListsService'
+import { tasksService } from '../services/TasksService'
 
 export class ListsController extends BaseController {
   constructor() {
@@ -14,10 +15,14 @@ export class ListsController extends BaseController {
       .post('', this.createList)
       .delete('/:id', this.deleteList)
       .put('/:id', this.editList)
+      // NOTE this is for tasks
+      .get('/:id/tasks', this.getTasks)
+      .post('/:id/tasks', this.createTask)
   }
 
   async getAll(req, res, next) {
     try {
+      req.query.creatorId = req.userInfo.id
       res.send(await listsService.find(req.query))
     } catch (error) {
       next(error)
@@ -36,7 +41,11 @@ export class ListsController extends BaseController {
 
   async deleteList(req, res, next) {
     try {
-      res.send(await listsService.deleteList(req.params.id))
+      if (req.body.creatorId === req.userInfo.id) {
+        res.send(await listsService.deleteList(req.params.id))
+      } else {
+        res.send('You must be the creator to delete this')
+      }
     } catch (error) {
       next(error)
     }
@@ -53,6 +62,23 @@ export class ListsController extends BaseController {
   async editList(req, res, next) {
     try {
       res.send(await listsService.editList(req.params.id, req.body))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async createTask(req, res, next) {
+    try {
+      req.body.creatorId = req.userInfo.id
+      res.send(await tasksService.createTask(req.body))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getTasks(req, res, next) {
+    try {
+      res.send(await tasksService.find({ creatorId: req.userInfo.id, listId: req.params.id }))
     } catch (error) {
       next(error)
     }

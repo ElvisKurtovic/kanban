@@ -31,13 +31,13 @@ class TasksService {
     }
   }
 
-  // async editTask(id, editedTask) {
-  //   try {
-  //     return await dbContext.Task.findByIdAndUpdate({ _id: id }, editedTask)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
+  async editTask(id, editedTask) {
+    try {
+      return await dbContext.Task.findByIdAndUpdate({ _id: id }, editedTask)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
 
 export const tasksService = new TasksService()

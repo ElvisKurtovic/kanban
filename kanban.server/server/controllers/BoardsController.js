@@ -21,6 +21,7 @@ export class BoardsController extends BaseController {
 
   async getAll(req, res, next) {
     try {
+      req.query.creatorId = req.userInfo.id
       res.send(await boardsService.find(req.query))
     } catch (error) {
       next(error)
@@ -39,7 +40,11 @@ export class BoardsController extends BaseController {
 
   async deleteBoard(req, res, next) {
     try {
-      res.send(await boardsService.deleteBoard(req.params.id))
+      if (req.body.creatorId === req.userInfo.id) {
+        res.send(await boardsService.deleteBoard(req.params.id))
+      } else {
+        res.send('You must be the creator to delete this')
+      }
     } catch (error) {
       next(error)
     }
@@ -47,6 +52,7 @@ export class BoardsController extends BaseController {
 
   async getOne(req, res, next) {
     try {
+      req.query.creatorId = req.userInfo.id
       res.send(await boardsService.findById(req.params.id))
     } catch (error) {
       next(error)
