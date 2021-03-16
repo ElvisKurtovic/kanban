@@ -30,6 +30,14 @@ class BoardsService {
       console.error(error)
     }
   }
+
+  async editBoard(id, editedBoard) {
+    try {
+      return await dbContext.Board.findByIdAndUpdate({ _id: id }, editedBoard)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
 
 export const boardsService = new BoardsService()
