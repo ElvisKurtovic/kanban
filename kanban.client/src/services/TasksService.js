@@ -23,7 +23,7 @@ class TasksService {
     }
   }
 
-  async deleteList(id) {
+  async deleteTask(id) {
     try {
       await api.delete('api/lists/' + id)
     } catch (error) {

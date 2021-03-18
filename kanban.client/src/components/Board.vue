@@ -4,6 +4,7 @@
       <div class="card-body">
         <h4 class="card-title">
           {{ board.title }}
+          <i class="fas fa-trash" aria-hidden="true" @click="deleteBoard"></i>
         </h4>
       </div>
     </router-link>

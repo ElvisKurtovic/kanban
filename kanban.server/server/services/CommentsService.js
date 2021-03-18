@@ -23,11 +23,10 @@ class CommentsService {
     return comment
   }
 
-  async deleteComment(id) {
-    try {
-      return await dbContext.Comment.findByIdAndDelete(id)
-    } catch (error) {
-      console.error(error)
+  async deleteComment(id, userId) {
+    const comment = await dbContext.Comment.findOneAndDelete({ _id: id, creatorId: userId })
+    if (!comment) {
+      throw new Error('You must be the creator to delete this')
     }
   }
 

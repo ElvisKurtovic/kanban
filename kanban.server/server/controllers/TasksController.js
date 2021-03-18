@@ -59,6 +59,7 @@ export class TasksController extends BaseController {
   async createComment(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
+      req.body.creatorEmail = req.userInfo.email
       res.send(await commentsService.createComment(req.body))
     } catch (error) {
       next(error)

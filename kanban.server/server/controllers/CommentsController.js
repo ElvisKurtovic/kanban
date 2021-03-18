@@ -12,7 +12,7 @@ export class CommentsController extends BaseController {
       .get('', this.getAll)
       .get('/:id', this.getOne)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
-      .post('', this.createComment)
+      // .post('', this.createComment)
       .delete('/:id', this.deleteComment)
       .put('/:id', this.editComment)
   }
@@ -26,23 +26,19 @@ export class CommentsController extends BaseController {
     }
   }
 
-  async createComment(req, res, next) {
-    try {
-      // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      req.body.creatorId = req.userInfo.id
-      res.send(201, await commentsService.createComment(req.body))
-    } catch (error) {
-      next(error)
-    }
-  }
+  // async createComment(req, res, next) {
+  //   try {
+  //     // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
+  //     req.body.creatorId = req.userInfo.id
+  //     res.send(201, await commentsService.createComment(req.body))
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
 
   async deleteComment(req, res, next) {
     try {
-      if (req.body.creatorId === req.userInfo.id) {
-        res.send(await commentsService.deleteComment(req.params.id))
-      } else {
-        res.send('You must be the creator to delete this')
-      }
+      res.send(await commentsService.deleteComment(req.params.id, req.userInfo.id))
     } catch (error) {
       next(error)
     }

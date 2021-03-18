@@ -3,6 +3,7 @@
     <div class="card">
       <h4 class="card-title">
         {{ list.title }}
+        <i class="fas fa-trash float-right" aria-hidden="true" @click="deleteList"></i>
       </h4>
       <form class="form-inline" @submit.prevent="createTask">
         <div class="form-group">
