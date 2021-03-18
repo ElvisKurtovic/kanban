@@ -1,10 +1,32 @@
 <template>
-  <div class="row">
-    <List v-for="listData in state.lists"
-          :key="listData.id"
-          :list="listData"
-    >
-    </list>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <form class="form-inline" @submit.prevent="createList">
+          <div class="form-group">
+            <input
+              type="text"
+              name="title"
+              id="title"
+              class="form-control"
+              placeholder="Title"
+              aria-describedby="helpId"
+              v-model="state.newList.title"
+            />
+          </div>
+          <button class="btn btn-info" type="submit">
+            Create New List
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <List v-for="listData in state.lists"
+            :key="listData.id"
+            :list="listData"
+      >
+      </list>
+    </div>
   </div>
 </template>
 <script>
@@ -38,7 +60,7 @@ export default {
         router.push({ name: 'Home' })
       },
       async createList() {
-        await listsService.createList({ board: state.board.id, body: state.newList.body })
+        await listsService.createList(route.params.id, state.newList)
         state.newList = {}
       }
     }

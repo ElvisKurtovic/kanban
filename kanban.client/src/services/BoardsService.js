@@ -32,46 +32,19 @@ class BoardsService {
     }
   }
 
-  async createBlog(rawBlog) {
-    try {
-      const res = await api.post('api/blogs', rawBlog)
-      AppState.blogs.push(res.data)
-      return res.data._id
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  async createComment(rawComment) {
-    try {
-      const res = await api.post('/api/comments', rawComment)
-      AppState.comments.push(res.data)
-      return res.data_id
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   async deleteBoard(id) {
     try {
       await api.delete('api/boards/' + id)
+      this.getBoards()
     } catch (error) {
       console.error(error)
     }
   }
 
-  async deleteComment(commentid, blogId) {
+  async createBoard(rawBoard) {
     try {
-      await api.delete('api/comments/' + commentid)
-      this.getComments(blogId)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  async editBlog(id, blog) {
-    try {
-      await api.put('api/blogs/' + id, blog)
+      await api.post('api/boards', rawBoard)
+      this.getBoards()
     } catch (error) {
       console.error(error)
     }

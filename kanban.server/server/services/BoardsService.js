@@ -3,11 +3,8 @@ import { BadRequest } from '../utils/Errors'
 
 class BoardsService {
   async createBoard(rawBoard) {
-    try {
-      return await dbContext.Board.create(rawBoard)
-    } catch (error) {
-      console.error(error)
-    }
+    const board = await dbContext.Board.create(rawBoard)
+    return board
   }
 
   async find(query = {}) {

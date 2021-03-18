@@ -3,11 +3,8 @@ import { BadRequest } from '../utils/Errors'
 
 class ListsService {
   async createList(rawList) {
-    try {
-      return await dbContext.List.create(rawList)
-    } catch (error) {
-      console.error(error)
-    }
+    const list = await dbContext.List.create(rawList)
+    return list
   }
 
   async find(query = {}) {

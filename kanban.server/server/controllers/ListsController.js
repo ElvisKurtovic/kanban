@@ -12,7 +12,7 @@ export class ListsController extends BaseController {
       .get('', this.getAll)
       .get('/:id', this.getOne)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
-      .post('', this.createList)
+      // .post('', this.createList)
       .delete('/:id', this.deleteList)
       .put('/:id', this.editList)
       // NOTE this is for tasks
@@ -29,15 +29,16 @@ export class ListsController extends BaseController {
     }
   }
 
-  async createList(req, res, next) {
-    try {
-      // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      req.body.creatorId = req.userInfo.id
-      res.send(201, await listsService.createList(req.body))
-    } catch (error) {
-      next(error)
-    }
-  }
+  // async createList(req, res, next) {
+  //   try {
+  //     // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
+  //     req.body.creatorId = req.userInfo.id
+  //     const list = await listsService.createList(req.body)
+  //     res.status(201).send(list)
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
 
   async deleteList(req, res, next) {
     try {

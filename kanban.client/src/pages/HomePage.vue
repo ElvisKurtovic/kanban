@@ -36,7 +36,7 @@
 import { AppState } from '../AppState'
 import { reactive, computed } from 'vue'
 import { boardsService } from '../services/BoardsService'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import { onMounted } from '@vue/runtime-core'
 
 export default {
@@ -47,15 +47,13 @@ export default {
       user: computed(() => AppState.user),
       newBoard: {}
     })
-    const router = useRouter()
     onMounted(() => {
       boardsService.getBoards()
     })
     return {
       state,
       async createBoard() {
-        const boardId = await boardsService.createBoard(state.newBoard)
-        router.push({ name: 'BoardsPage', params: { id: boardId } })
+        await boardsService.createBoard(state.newBoard)
         state.newBoard = {}
       }
     }

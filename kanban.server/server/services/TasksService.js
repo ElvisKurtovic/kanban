@@ -3,11 +3,8 @@ import { BadRequest } from '../utils/Errors'
 
 class TasksService {
   async createTask(rawTask) {
-    try {
-      return await dbContext.Task.create(rawTask)
-    } catch (error) {
-      console.error(error)
-    }
+    const task = await dbContext.Task.create(rawTask)
+    return task
   }
 
   async find(query = {}) {
