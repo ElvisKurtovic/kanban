@@ -20,11 +20,10 @@ class TasksService {
     return task
   }
 
-  async deleteTask(id) {
-    try {
-      return await dbContext.Task.findByIdAndDelete(id)
-    } catch (error) {
-      console.error(error)
+  async deleteTask(id, userId) {
+    const task = await dbContext.Task.findOneAndDelete({ _id: id, creatorId: userId })
+    if (!task) {
+      throw new Error('You must be the creator to delete this')
     }
   }
 

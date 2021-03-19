@@ -1,8 +1,9 @@
 <template>
-  <p>
-    {{ comment.title }}
-    User - {{ comment.creatorEmail }}
-    <i class="fas fa-trash" aria-hidden="true" @click="deleteComment"></i>
+  <p class="border rounded border-info bg-dark text-light px-1">
+    {{ comment.title }} <span class="float-right"><i class="fas fa-trash btncolor4" aria-hidden="true" @click="deleteComment"></i></span>
+    <span><p> -{{ comment.creatorEmail }} </p>
+
+    </span>
   </p>
 </template>
 
@@ -33,5 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.btncolor4{
+  color: darken($color: #45e0e3, $amount: 0);
+}
 </style>

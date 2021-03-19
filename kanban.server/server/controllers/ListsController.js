@@ -42,11 +42,7 @@ export class ListsController extends BaseController {
 
   async deleteList(req, res, next) {
     try {
-      if (req.body.creatorId === req.userInfo.id) {
-        res.send(await listsService.deleteList(req.params.id))
-      } else {
-        res.send('You must be the creator to delete this')
-      }
+      res.send(await listsService.deleteList(req.params.id, req.userInfo.id))
     } catch (error) {
       next(error)
     }

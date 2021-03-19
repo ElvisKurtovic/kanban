@@ -1,9 +1,9 @@
 <template>
   <div class="col">
-    <div class="card">
+    <div class="card mt-1 pb-1 mb-1">
       <h4 class="card-title">
         {{ task.title }}
-        <i class="fas fa-trash" aria-hidden="true" @click="deleteTask"></i>
+        <i class="fas fa-trash float-right darkgrey" aria-hidden="true" @click="deleteTask"></i>
       </h4>
       <Comment v-for="comment in state.comments" :key="comment.id" :task="task" :comment="comment" />
       <form class="form-inline" @submit.prevent="createComment">
@@ -18,7 +18,7 @@
             v-model="state.newComment.title"
           />
         </div>
-        <button class="btn btn-info" type="submit">
+        <button class="btn btn-dark" type="submit">
           Create New Comment
         </button>
       </form>
@@ -34,7 +34,8 @@ import { commentsService } from '../services/CommentsService'
 export default {
   name: 'Task',
   props: {
-    task: { type: Object, required: true }
+    task: { type: Object, required: true },
+    list: { type: Object, required: true }
   },
   setup(props) {
     const state = reactive({
@@ -56,6 +57,7 @@ export default {
       },
       deleteTask() {
         tasksService.deleteTask(props.task.id)
+        tasksService.getTasks(props.list.id)
       }
     }
   },
@@ -64,5 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.darkgrey{
+  color:magenta;
+}
 </style>

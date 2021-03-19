@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row">
+    <div class="row text-center">
       <div class="col" v-if="state.user.isAuthenticated">
         <form class="form-inline" @submit.prevent="createBoard">
           <div class="form-group">
@@ -14,7 +14,7 @@
               v-model="state.newBoard.title"
             />
           </div>
-          <button class="btn btn-info" type="submit">
+          <button class="btn btn-primary" type="submit">
             Create New Board
           </button>
         </form>

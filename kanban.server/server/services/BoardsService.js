@@ -20,11 +20,10 @@ class BoardsService {
     return board
   }
 
-  async deleteBoard(id) {
-    try {
-      return await dbContext.Board.findByIdAndDelete(id)
-    } catch (error) {
-      console.error(error)
+  async deleteBoard(id, userId) {
+    const board = await dbContext.Board.findOneAndDelete({ _id: id, creatorId: userId })
+    if (!board) {
+      throw new Error('You must be the creator to delete this')
     }
   }
 

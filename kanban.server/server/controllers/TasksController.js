@@ -30,11 +30,7 @@ export class TasksController extends BaseController {
 
   async deleteTask(req, res, next) {
     try {
-      if (req.body.creatorId === req.userInfo.id) {
-        res.send(await tasksService.deleteTask(req.params.id))
-      } else {
-        res.send('You must be the creator to delete this')
-      }
+      res.send(await tasksService.deleteTask(req.params.id, req.userInfo.id))
     } catch (error) {
       next(error)
     }

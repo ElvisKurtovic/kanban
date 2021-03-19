@@ -20,11 +20,10 @@ class ListsService {
     return list
   }
 
-  async deleteList(id) {
-    try {
-      return await dbContext.List.findByIdAndDelete(id)
-    } catch (error) {
-      console.error(error)
+  async deleteList(id, userId) {
+    const list = await dbContext.List.findOneAndDelete({ _id: id, creatorId: userId })
+    if (!list) {
+      throw new Error('You must be the creator to delete this')
     }
   }
 

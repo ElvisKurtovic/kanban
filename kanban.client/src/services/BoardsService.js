@@ -35,7 +35,6 @@ class BoardsService {
   async deleteBoard(id) {
     try {
       await api.delete('api/boards/' + id)
-      this.getBoards()
     } catch (error) {
       console.error(error)
     }

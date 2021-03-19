@@ -25,7 +25,8 @@ class TasksService {
 
   async deleteTask(id) {
     try {
-      await api.delete('api/lists/' + id)
+      const res = await api.delete('api/tasks/' + id)
+      return res.data
     } catch (error) {
       console.error(error)
     }

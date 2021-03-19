@@ -1,13 +1,15 @@
 <template>
-  <div class="col-4 card Board">
+  <div class="col-4 card Board mt-1 bg-darkgrey">
     <router-link :to="{name: 'BoardsPage', params: { id: board.id } }">
       <div class="card-body">
-        <h4 class="card-title">
+        <h4 class="card-title text-color">
           {{ board.title }}
-          <i class="fas fa-trash" aria-hidden="true" @click="deleteBoard"></i>
         </h4>
       </div>
     </router-link>
+    <div class="z-2">
+      <i class="fas fa-trash float-right text-danger" aria-hidden="true" @click="deleteBoard"></i>
+    </div>
   </div>
 </template>
 
@@ -28,6 +30,7 @@ export default {
       state,
       deleteBoard() {
         boardsService.deleteBoard(props.board.id)
+        boardsService.getBoards(props.board.id)
       }
     }
   },
@@ -36,5 +39,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.z-2 {
+  z-index: 2;
+}
 
+.bg-darkgrey{
+  background-color: darkgray;
+}
+
+.text-color{
+  color:ghostwhite !important
+}
 </style>

@@ -1,15 +1,15 @@
 <template>
-  <header>
+  <header class="cooltext">
     <Navbar />
   </header>
-  <main>
+  <main class="bg-dark cooltext">
     <router-view />
   </main>
-  <footer>
+  <!-- <footer>
     <div class="bg-dark text-light text-center p-4">
       Made with 💖 by CodeWorks
     </div>
-  </footer>
+  </footer> -->
 </template>
 
 <script>

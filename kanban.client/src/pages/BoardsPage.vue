@@ -9,21 +9,22 @@
               name="title"
               id="title"
               class="form-control"
-              placeholder="Title"
+              placeholder="List Title.."
               aria-describedby="helpId"
               v-model="state.newList.title"
             />
           </div>
-          <button class="btn btn-info" type="submit">
+          <button class="btn btncolor text-light" type="submit">
             Create New List
           </button>
         </form>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-1">
       <List v-for="listData in state.lists"
             :key="listData.id"
             :list="listData"
+            :board="board"
       >
       </list>
     </div>
@@ -32,7 +33,7 @@
 <script>
 import { reactive, computed, onMounted } from 'vue'
 import { AppState } from '../AppState'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { boardsService } from '../services/BoardsService'
 import { listsService } from '../services/ListsService'
 
@@ -40,7 +41,7 @@ export default {
   name: 'BoardsPage',
   setup() {
     const route = useRoute()
-    const router = useRouter()
+    // const router = useRouter()
     const state = reactive({
       board: computed(() => AppState.activeBoard),
       user: computed(() => AppState.user),
@@ -55,10 +56,10 @@ export default {
     return {
       state,
       route,
-      async deleteBoard() {
-        await boardsService.deleteBoard(state.board.id)
-        router.push({ name: 'Home' })
-      },
+      // async deleteBoard() {
+      //   await boardsService.deleteBoard(state.board.id)
+      //   router.push({ name: 'Home' })
+      // },
       async createList() {
         await listsService.createList(route.params.id, state.newList)
         state.newList = {}
@@ -70,4 +71,7 @@ export default {
 </script>
 
     <style lang="scss" scoped>
+    .btncolor{
+      background-color: magenta;
+    }
     </style>

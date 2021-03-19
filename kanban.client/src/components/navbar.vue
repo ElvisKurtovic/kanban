@@ -23,6 +23,9 @@
           </router-link>
         </li>
       </ul>
+      <span class="text-light mx-auto">
+        <h4>codeworks.Trello</h4>
+      </span>
       <span class="navbar-text">
         <button
           class="btn btn-outline-primary text-uppercase"

@@ -10,7 +10,6 @@ export class BoardsController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAll)
       .get('/:id', this.getOne)
-      // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .post('', this.createBoard)
       .delete('/:id', this.deleteBoard)
       .put('/:id', this.editBoard)
@@ -41,11 +40,7 @@ export class BoardsController extends BaseController {
 
   async deleteBoard(req, res, next) {
     try {
-      if (req.body.creatorId === req.userInfo.id) {
-        res.send(await boardsService.deleteBoard(req.params.id))
-      } else {
-        res.send('You must be the creator to delete this')
-      }
+      res.send(await boardsService.deleteBoard(req.params.id, req.userInfo.id))
     } catch (error) {
       next(error)
     }
